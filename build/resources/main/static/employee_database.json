@@ -19,7 +19,25 @@
     "firstName" : "Paul",
     "lastName" : "McCartney",
     "position" : "Developer I",
-    "department" : "Engineering"
+    "department" : "Engineering",
+    "directReports": [
+      {
+        "employeeId": "913a6c45-19dc-4f83-9ddd-f4e41e5d2bfe",
+        "firstName": null,
+        "lastName": null,
+        "position": null,
+        "department": null,
+        "directReports": null
+      }
+    ]
+  },
+  {
+    "employeeId": "913a6c45-19dc-4f83-9ddd-f4e41e5d2bfe",
+    "firstName": "Paul jr",
+    "lastName": "McCartney jr",
+    "position": "Developer I2",
+    "department": "Engineering2",
+    "directReports": null
   },
   {
     "employeeId" : "03aa1462-ffa9-4978-901b-7c001562cf6f",

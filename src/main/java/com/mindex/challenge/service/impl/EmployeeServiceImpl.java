@@ -1,5 +1,6 @@
 package com.mindex.challenge.service.impl;
 
+import com.mindex.challenge.dao.CompensationRepository;
 import com.mindex.challenge.dao.EmployeeRepository;
 import com.mindex.challenge.data.Employee;
 import com.mindex.challenge.service.EmployeeService;
@@ -16,6 +17,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private CompensationRepository compensationRepository;
 
     @Override
     public Employee create(Employee employee) {
@@ -45,5 +49,25 @@ public class EmployeeServiceImpl implements EmployeeService {
         LOG.debug("Updating employee [{}]", employee);
 
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public int getNumberOfReports(Employee employee) {
+        LOG.debug("calculating number of reports for employee [{}]", employee.getEmployeeId());
+        return getNumberOfReportsHelper(employee);
+    }
+
+    private int getNumberOfReportsHelper(Employee employee){
+        if (employee.getDirectReports() == null){
+            return 0;
+        }
+        int sum = 0;
+        for (Employee directReport : employee.getDirectReports() ){
+
+            Employee searchForDirectReportEmployee = employeeRepository.findByEmployeeId(directReport.getEmployeeId());
+            sum+= 1 + getNumberOfReportsHelper(searchForDirectReportEmployee);
+        }
+
+        return sum;
     }
 }
