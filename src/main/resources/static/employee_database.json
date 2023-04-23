@@ -51,6 +51,9 @@
       },
       {
         "employeeId": "c0c2293d-16bd-4603-8e08-638a9d18b22c"
+      },
+      {
+        "employeeId": "4cfd38d0-cd93-406d-9910-cf017090b5a5"
       }
     ]
   },
@@ -67,5 +70,13 @@
     "lastName" : "Harrison",
     "position" : "Developer III",
     "department" : "Engineering"
+  },
+  {
+    "employeeId": "4cfd38d0-cd93-406d-9910-cf017090b5a5",
+    "firstName": "Bob",
+    "lastName": "Dylan",
+    "position": "Developer I",
+    "department": "Engineering",
+    "directReports": null
   }
 ]
