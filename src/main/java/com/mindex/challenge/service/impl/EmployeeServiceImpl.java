@@ -64,7 +64,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         int sum = 0;
         for (Employee directReport : employee.getDirectReports() ){
 
-            Employee searchForDirectReportEmployee = employeeRepository.findByEmployeeId(directReport.getEmployeeId());
+            Employee searchForDirectReportEmployee = read(directReport.getEmployeeId());
             sum+= 1 + getNumberOfReportsHelper(searchForDirectReportEmployee);
         }
 

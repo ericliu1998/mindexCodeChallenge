@@ -9,7 +9,9 @@ import com.mindex.challenge.service.EmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.UUID;
 
@@ -19,7 +21,7 @@ public class CompensationServiceImpl implements CompensationService {
     private static final Logger LOG = LoggerFactory.getLogger(CompensationServiceImpl.class);
 
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private EmployeeService employeeService;
 
     @Autowired
     private CompensationRepository compensationRepository;
@@ -28,15 +30,16 @@ public class CompensationServiceImpl implements CompensationService {
     public Compensation create(Compensation compensation) {
         LOG.debug("Creating compensation [{}]", compensation);
 
-        Employee employee = employeeRepository.findByEmployeeId(compensation.getEmployee().getEmployeeId());
+        Employee employee = employeeService.read(compensation.getEmployee().getEmployeeId());
 
         Compensation findCompensation = compensationRepository.findByEmployee(employee);
 
         if (findCompensation != null) {
-            throw new RuntimeException("Compensation already exist for id: " + employee.getEmployeeId());
+            throw new RuntimeException("Compensation already created from employeeId: " + compensation.getEmployee().getEmployeeId());
         }
 
         compensation.setEmployee(employee);
+
         compensationRepository.insert(compensation);
 
         return compensation;
@@ -46,7 +49,7 @@ public class CompensationServiceImpl implements CompensationService {
     public Compensation read(String id) {
         LOG.debug("Finding compensation from employee with id [{}]", id);
 
-        Employee employee = employeeRepository.findByEmployeeId(id);
+        Employee employee = employeeService.read(id);
 
         Compensation compensation = compensationRepository.findByEmployee(employee);
 
